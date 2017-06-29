@@ -84,20 +84,7 @@ $ git checkout -b 2.6.1 tags/2.6.1
 $ pip install -e .
 $ pip install pygdal==1.11.3.3
 $ paver setup
-$ python manage.py migrate
-```
-
-### Create a superuser
-
-GeoNode needs one or more administrative users. Create one using the createsuperuser Django command:
-
-```sh
-$ python manage.py createsuperuser
-Username: admin
-Email address: me@geonode.org
-Password:
-Password (again):
-Superuser created successfully.
+$ paver sync
 ```
 
 ### Test if GeoNode is running
@@ -111,7 +98,10 @@ $ python manage.py runserver 0.0.0.0:8000
 
 Now try to access to the GeoNode instance at: http://localhost:8000/
 
-Log in in GeoNode using the administrative account you previously created (admin, if you followed exactly these instructions)
+Log in in GeoNode using the administrative account which should have been already created:
+
+* user: admin
+* password: admin
 
 <img src="images/0000_geonode_login.png" alt="GeoNode Login" />
 
