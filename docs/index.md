@@ -17,9 +17,16 @@ The organizers will lead the workshop’s participants, with a series of step by
 
 The workshop is targeted to geospatial developers who should have a basic understanding of web development, OGC standards and spatial databases.
 
+## Prerequisites
+
+You need to take your notebook at the workshop. The notebook should have at least 4GB of RAM. You can use any operating system (Linux, OsX, Windows), provided that you install the following tools:
+
+* [git](https://git-scm.com/downloads)
+* [Vagrant](https://www.vagrantup.com/downloads.html)
+
 ## Outline
 
-0. [Setup a development environment containing all of the components using Vagrant](00_setup.md)
+0. [Setup the workshop environment](00_setup_the_workshop_environment.md)
 1. [A GeoNode quickstart](01_GeoNode_Quickstart.md)
   * Using the Django shell
   * OGC services in GeoServer
