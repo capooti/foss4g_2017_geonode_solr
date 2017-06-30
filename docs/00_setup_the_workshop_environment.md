@@ -83,9 +83,12 @@ $ cd geonode
 $ git checkout -b 2.6.1 tags/2.6.1
 $ pip install -e .
 $ pip install pygdal==1.11.3.3
+$ pip install ipython
 $ paver setup
 $ paver sync
 ```
+
+ipython is not required by GeoNode, but it will be a very helpful tool for the purpose of this workshop.
 
 ### Test if GeoNode is running
 

@@ -27,8 +27,8 @@ You need to take your notebook at the workshop. The notebook should have at leas
 ## Outline
 
 0. [Setup the workshop environment](00_setup_the_workshop_environment.md)
-1. [A GeoNode quickstart](01_GeoNode_Quickstart.md)
-  * Using the Django shell
+1. [A GeoNode quickstart](01_geonode_quickstart.md)
+2. [Programming GeoNode with Python](02_programming_geonode_with_python.md)
   * OGC services in GeoServer
   * Querying pycsw with curl and OWSLib
   * Spatial queries with PostGIS
