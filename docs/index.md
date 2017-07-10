@@ -29,14 +29,16 @@ You need to take your notebook at the workshop. The notebook should have at leas
 0. [Setup the workshop environment](00_setup_the_workshop_environment.md)
 1. [A GeoNode quickstart](01_geonode_quickstart.md)
 2. [Programming GeoNode with Python](02_programming_geonode_with_python.md)
-  * OGC services in GeoServer
-  * Querying pycsw with curl and OWSLib
-  * Spatial queries with PostGIS
-2. Debugging GeoNode OGC services with Firebug
-3. Using GeoNode OGC services with external clients such as QGIS (WMS, WFS, CSW)
-4. Batch upload and register of new layers
-5. Running asynchronous tasks using the task queues (Celery/RabbitMQ)
-6. Taking advantage of a search engine (Solr) in GeoNode
+3. [OGC services with GeoServer](03_geoserver.md)
+4. [Tile caching with GeoWebCache](04_geowebcache.md)
+5. [Catalogue services with pycsw](05_pycsw.md)
+6. [Spatial queries with PostGIS](06_postgis.md)
+7. Debugging GeoNode OGC services with Firebug
+8. Using GeoNode OGC services with external clients such as QGIS (WMS, WFS, CSW)
+9. Using GeoNode management commands
+10. Batch upload and register of new layers
+11. Running asynchronous tasks using the task queues (Celery/RabbitMQ)
+12. Taking advantage of a search engine (Solr) in GeoNode
   * A quick tour of Solr
   * Indexing GeoNode content in Solr using Python
   * Using Solr to search and analyze GeoNode data

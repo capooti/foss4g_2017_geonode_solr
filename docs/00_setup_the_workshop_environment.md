@@ -125,7 +125,7 @@ NOTE: the workshop uses Solr as the search engine, but it should be relatively e
 
 As a first thing, download and extract the latest Solr release in your Vagrant box. Then install the service following these instructions:
 
-```ssh
+```sh
 $ cd /opt/
 $ sudo wget http://apache.claz.org/lucene/solr/6.6.0/solr-6.6.0.tgz
 $ sudo tar zxf solr-6.6.0.tgz
@@ -138,3 +138,17 @@ Now the Solr service should be already up and running.
 Make sure that the Solr administrative interface is correctly running at http://localhost:8983/solr/#/
 
 <img src="images/0002_solr_admin.png" alt="Solr Admin" />
+
+## PostgreSQL and PostGIS installation
+
+By default, doing the GeoNode setup from git as you did, the Django database is created on sqlite, and the vector datasets (shapefiles) are uploaded as shapefile stores in GeoServer.
+
+In production it is desirable to use a relational database in place of sqlite for the Django database. At the same time vector files are better stored in a spatial database: concurrent access will be optimized and transactions will be enabled - which means that GeoNode users will be able - if needed - to edit remotely the vector datasets using the GeoExplorer edit toolbar.
+
+PostgreSQL, thanks to its wonderful spatial support provided by PostGIS, is by far the best choice for a RDBMS in GeoNode.
+
+Install PostgreSQL and PostGIS from apt packages:
+
+```sh
+sudo apt-get install postgresql postgresql-contrib postgis
+```
