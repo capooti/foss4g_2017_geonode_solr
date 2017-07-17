@@ -32,8 +32,8 @@ You need to take your notebook at the workshop. The notebook should have at leas
 * [A GeoNode quickstart](01_geonode_quickstart.md)
 * [Programming GeoNode with Python](02_programming_geonode_with_python.md)
 * [OGC services with GeoServer](03_geoserver.md)
-* [Tile caching with GeoWebCache](04_geowebcache.md)
-* Catalogue services with pycsw
+* [Tiles caching with GeoWebCache](04_geowebcache.md)
+* [Catalogue services with pycsw](05_pycsw.md)
 * [Spatial queries with PostGIS](06_postgis.md)
 * Debugging GeoNode OGC services with Firebug
 * Using GeoNode OGC services with external clients such as QGIS (WMS, WFS, CSW) and OpenLayers
