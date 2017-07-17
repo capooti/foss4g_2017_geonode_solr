@@ -19,27 +19,27 @@ The workshop is targeted to geospatial developers who should have a basic unders
 
 ## Prerequisites
 
-You need to take your notebook at the workshop. The notebook should have at least 4GB of RAM. You can use any operating system (Linux, OsX, Windows), provided that you install the following tools:
+You need to take your notebook at the workshop. The notebook should have at least 4GB of RAM. You can use any operating system (Linux, OS X, Windows), provided that you install the following tools:
 
 * [git](https://git-scm.com/downloads)
 * [Vagrant](https://www.vagrantup.com/downloads.html)
+* [QGIS](http://www.qgis.org/en/site/forusers/download.html)
 
-## Outline
+## Outline of tutorials
 
-0. [Setup the workshop environment](00_setup_the_workshop_environment.md)
-1. [A GeoNode quickstart](01_geonode_quickstart.md)
-2. [Programming GeoNode with Python](02_programming_geonode_with_python.md)
-3. [OGC services with GeoServer](03_geoserver.md)
-4. [Tile caching with GeoWebCache](04_geowebcache.md)
-5. [Catalogue services with pycsw](05_pycsw.md)
-6. [Spatial queries with PostGIS](06_postgis.md)
-7. Debugging GeoNode OGC services with Firebug
-8. Using GeoNode OGC services with external clients such as QGIS (WMS, WFS, CSW)
-9. Using GeoNode management commands
-10. Batch upload and register of new layers
-11. Running asynchronous tasks using the task queues (Celery/RabbitMQ)
-12. Taking advantage of a search engine (Solr) in GeoNode
-  * A quick tour of Solr
-  * Indexing GeoNode content in Solr using Python
-  * Using Solr to search and analyze GeoNode data
-  * Using Python and OWSLib to index OGC services in Solr
+* [Introduction](introduction.md)
+* [Setup the workshop environment](00_setup_the_workshop_environment.md)
+* [A GeoNode quickstart](01_geonode_quickstart.md)
+* [Programming GeoNode with Python](02_programming_geonode_with_python.md)
+* [OGC services with GeoServer](03_geoserver.md)
+* [Tile caching with GeoWebCache](04_geowebcache.md)
+* Catalogue services with pycsw
+* [Spatial queries with PostGIS](06_postgis.md)
+* Debugging GeoNode OGC services with Firebug
+* Using GeoNode OGC services with external clients such as QGIS (WMS, WFS, CSW) and OpenLayers
+* Using GeoNode management commands
+* Batch upload and register of new layers
+* Running asynchronous tasks using the task queues (Celery/RabbitMQ)
+* Taking advantage of a search engine (Solr) in GeoNode: a quick tour of Solr
+* Indexing GeoNode content in Solr using Python and using Solr to search and analyze GeoNode data
+* Using Python and OWSLib to index OGC services in Solr
