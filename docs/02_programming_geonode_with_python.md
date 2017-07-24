@@ -140,10 +140,10 @@ admin admin admin
 The Django shell can be used to programmatically update the metadata of a layer or a map. Here is what you can do to change the title and the abstract of a layer:
 
 ```python
-layer = Layer.objects.all()[0]
-layer.title = 'Bike Trails updated'
-layer.abstract = '2009 MBTA bike trails updated'
-layer.save()
+>>> layer = Layer.objects.all()[0]
+>>> layer.title = 'Bike Trails updated'
+>>> layer.abstract = '2009 MBTA bike trails updated'
+>>> layer.save()
 ```
 
 If now you open the layers page, you should see the metadata for the title and abstract correctly updated:
@@ -158,20 +158,20 @@ GeoNode comes with GDAL and its Python bindings installed. [GDAL](http://www.gda
 
 > The Geospatial Data Abstraction Library (GDAL) is a computer software library for reading and writing raster and vector geospatial data formats, and is released under the permissive X/MIT style free software license by the Open Source Geospatial Foundation. As a library, it presents a single abstract data model to the calling application for all supported formats. It may also be built with a variety of useful command line interface utilities for data translation and processing. Projections and transformations are supported by the PROJ.4 library.
 
->The related OGR library (OGR Simple Features Library[2]), which is part of the GDAL source tree, provides a similar ability for simple features vector graphics data. GDAL was developed mainly by Frank Warmerdam until the release of version 1.3.2, when maintenance was officially transferred to the GDAL/OGR Project Management Committee under the Open Source Geospatial Foundation.
+>The related OGR library (OGR Simple Features Library), which is part of the GDAL source tree, provides a similar ability for simple features vector graphics data. GDAL was developed mainly by Frank Warmerdam until the release of version 1.3.2, when maintenance was officially transferred to the GDAL/OGR Project Management Committee under the Open Source Geospatial Foundation.
 
 > GDAL/OGR is considered a major free software project for its "extensive capabilities of data exchange" and also in the commercial GIS community due to its widespread use and comprehensive set of functionalities.
 
 Here you will use the GDAL Python bindings to read the "Boston Public Schools (2012)" shapefile store in GeoNode/GeoServer.
 
 ```python
-from osgeo import ogr
-schools_shapefile = "/vagrant/geonode/geonode/uploaded/layers/boston_public_schools_2012_z1l.shp"
-driver = ogr.GetDriverByName('ESRI Shapefile')
-data_source = driver.Open(schools_shapefile, 0) # 0 means read only
-shp_layer = data_source.GetLayer() # shapefiles have just one layer
-for feature in shp_layer:
-  print feature.GetField("City"), feature.GetField("School_Nam"), feature.GetGeometryRef().ExportToWkt()
+>>> from osgeo import ogr
+>>> schools_shapefile = "/vagrant/geonode/geonode/uploaded/layers/boston_public_schools_2012_z1l.shp"
+>>> driver = ogr.GetDriverByName('ESRI Shapefile')
+>>> data_source = driver.Open(schools_shapefile, 0) # 0 means read only
+>>> shp_layer = data_source.GetLayer() # shapefiles have just one layer
+>>> for feature in shp_layer:
+>>>   print feature.GetField("City"), feature.GetField("School_Nam"), feature.GetGeometryRef().ExportToWkt()
 
 East Boston Adams Elementary POINT (238299.659967332147062 901795.889980231411755)
 Brighton Another Course to College POINT (229148.81013232798432 900003.229980574804358)
