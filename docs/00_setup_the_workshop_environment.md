@@ -32,16 +32,16 @@ If you are new to SSH, a good introduction can be found [here](https://docstore.
 
 ## GeoNode installation
 
-In this step of the workshop you will install GeoNode, on top of which you will build a testing geoportal in the next steps of the workshop.
+In this step of the workshop you will install GeoNode, on top of which you will build a testing geoportal in the next tutorials of the workshop.
 
 [GeoNode](http://geonode.org/) is an Open Source, Content Management System (CMS) for geospatial data. It is a web-based application and platform for developing Geographic Information Systems (GIS) and for deploying Spatial Data Infrastructures (SDI).
-For more information about it check [its documentation](http://docs.geonode.org/en/master/), the next steps of this workshop or both.
+For more information about it check [its documentation](http://docs.geonode.org/en/master/), the next tutorials of this workshop or both.
 
 GeoNode it is based on Django, which is a great Python web framework. Other core components of GeoNode are PostgreSQL/PostGIS, GeoServer, pycsw or GeoNetworks and GeoExplorer.
 
 ### Install requirements
 
-You will use the apt package manager to install the requirements for the environment.
+You will use the Ubuntu apt package manager to install the requirements for the environment.
 
 You will install Python 2.7 (needed by GeoNode, which does not run on Python 3, the default Python version at Ubuntu 16.04) and all of the other requirements, including Java:
 
@@ -90,7 +90,7 @@ $ paver sync
 
 ipython is not required by GeoNode, but it will be a very helpful tool for the purpose of this workshop.
 
-### Test if GeoNode is running
+### Start GeoNode and GeoServer
 
 If everything went smoothly, you should now be able to start GeoServer and GeoNode:
 
@@ -116,7 +116,7 @@ The GeoServer administrative interface should corretly display at the url: http:
 
 ## Solr installation
 
-[Apache Solr](http://lucene.apache.org/solr/) is an open source enterprise search platform, developed in Java, on top of the Apache Lucene project. Its major features include full-text search, hit highlighting, faceted search, real-time indexing, dynamic clustering, database integration, NoSQL features and rich document (e.g., Word, PDF) handling. Providing distributed search and index replication, Solr is designed for scalability and fault tolerance.
+[Apache Solr](http://lucene.apache.org/solr/) is an open source enterprise search platform, developed in Java, on top of the [Apache Lucene project](https://lucene.apache.org/core/). Its major features include full-text search, hit highlighting, faceted search, real-time indexing, dynamic clustering, database integration, NoSQL features and rich document (e.g., Word, PDF) handling. Providing distributed search and index replication, Solr is designed for scalability and fault tolerance.
 
 Solr provides a [great spatial support](https://cwiki.apache.org/confluence/display/solr/Spatial+Search) as well, which can be used for example for providing spacial facets to your SDI.
 Solr is, with [Elasticsearch](https://www.elastic.co/products/elasticsearch), the most popular enterprise search engine nowadays.
