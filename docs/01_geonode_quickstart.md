@@ -1,10 +1,10 @@
 # A GeoNode quickstart
 
-In this step of the workshop you will use GeoNode as an end user. You will upload some layers using the user interface, then you will compile metadata for these layers and create a map with them.
+In this first tutorial of the workshop you will use GeoNode as an end user. You will upload some layers using the user interface, then you will compile metadata for these layers and create a map with them.
 
-You will use the datasets you are uploading to GeoNode in the next workshop's steps, so make it sure to follow these instructions carefully.
+You will use the datasets you are uploading to GeoNode in the next workshop's tutorials, so make it sure to follow these instructions carefully.
 
-You can find the shapefiles that are needed for this step in the *data* directory. They are zipped, and you don't need to unzip them as GeoNode can import zipped shapefiles.
+You can find the shapefiles that are needed for this tutorial in the *data/shapefiles* directory. They are zipped, and you don't need to unzip them as GeoNode can import zipped shapefiles.
 
 ## Overview of the datasets
 
@@ -28,7 +28,7 @@ Here is a quick overview of the datasets you are going to use:
 
 ## Upload datasets to GeoNode
 
-In this step you will upload the shapefiles to GeoNode. Here is how you can upload one of the datasets. Just repeat the same process for all of the datasets.
+In this tutorial you will upload the shapefiles to GeoNode. Here is how you can upload one of the datasets. Just repeat the same process for all of the datasets.
 
 Click on the "Data > Upload Layer" menu. Then drag and drop the *biketrails_arc_p.zip* file to the "Drop files here" area, or use for this purpose the "Choose Files" button.
 
@@ -36,7 +36,7 @@ Click on the "Data > Upload Layer" menu. Then drag and drop the *biketrails_arc_
 
 In a real use case scenario it would be possible to give granular permissions for this dataset to users or group of users. It is possible to do this using the "permissions" box.
 
-For the purpose of this workshop we will leave default permissions for each datasets: this means that anyone will be able to see and download the datasets, but only GeoNode administrators will be able to change the metadata, edit the styles, and administer the dataset.
+For the purpose of this workshop we will leave default permissions for each datasets: this means that anyone will be able to see and download the datasets, but only the data owner and GeoNode administrators will be able to change the metadata, edit the styles, and administer the dataset.
 
 Click on the "Upload Files" button. If everything works smoothly, you should see the following info box at the end of the upload process:
 
@@ -141,7 +141,7 @@ This is how the layer style should look at the end:
 
 Now, using the same approach based on rules, edit the style for the "Socioeconomic Status (2000-2014)".
 
-Create three different rules, using the attribute:
+Create three different rules, using the attribute *SESdx14*:
 
 Rule 1:
 * Name: "Low"
