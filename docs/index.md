@@ -24,6 +24,9 @@ You need to take your notebook at the workshop. The notebook should have at leas
 * [git](https://git-scm.com/downloads)
 * [Vagrant](https://www.vagrantup.com/downloads.html)
 * [QGIS](http://www.qgis.org/en/site/forusers/download.html)
+* [Firefox](https://www.mozilla.org/en-US/firefox/new/)
+
+Note: you could use [Chrome](https://www.google.com/chrome/browser/desktop/index.html) in place of Firefox for all of the tutorials of this workshop. Though, one tutorial will use the [Firefox Developer Tools](https://developer.mozilla.org/en-US/docs/Tools/Tools_Toolbox) to inspect requests to the OGC services. If using Chrome you should be able to follow along that tutorial using the [Chrome Developer Tools](https://developer.chrome.com/devtools) 
 
 ## Outline of tutorials
 
