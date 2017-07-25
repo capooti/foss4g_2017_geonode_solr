@@ -379,3 +379,11 @@ geonode-# WHERE ST_Contains(ST_Transform(d.the_geom, 4326), c.the_geom);
  Hyde Park            | Boston Baptist College
 (43 rows)
 ```
+
+## Additional resources
+
+* [PostgreSQL Tutorial](http://www.postgresqltutorial.com/)
+* [Introduction to PostGIS Workshop](http://workshops.boundlessgeo.com/postgis-intro/) by Boundless
+* [The official PostgreSQL documentation](https://www.postgresql.org/docs/9.6/static/index.html)
+* [The officila PostGIS documentation](http://postgis.net/documentation/)
+* [PostGIS functions index](http://postgis.net/docs/manual-2.3/PostGIS_Special_Functions_Index.html)
