@@ -16,7 +16,7 @@ For example, clicking on the *ISO* link you will access to the metadata for the 
 
 http://localhost:8000/catalogue/csw?outputschema=http%3A%2F%2Fwww.isotc211.org%2F2005%2Fgmd&service=CSW&request=GetRecordById&version=2.0.2&elementsetname=full&id=8bcf5bfc-5cfc-11e7-8103-02d8e4477a33
 
-Look at the pycsw output of this request, and you should recognize to the information which you filled in an earlier tutorial:
+Look at the pycsw output of this request, and you should recognize the information which you filled in an earlier tutorial:
 
 * title
 * keywords
@@ -132,7 +132,7 @@ It is possible to retrieve records using several types of text and spatial filte
 
 http://localhost:8000/catalogue/csw?service=CSW&version=2.0.2&request=GetRecords&ElementSetName=full&typenames=csw:Record&resulttype=results&q=bike&bbox=-180,-90,180,90
 
-A great source to get a good understanding of the filters is to read at the [pycsw test suite](https://github.com/geopython/pycsw/tree/master/tests)
+A great source to get a good understanding of the filters is to look at the [pycsw test suite](https://github.com/geopython/pycsw/tree/master/tests)
 
 ### GetRecordById
 
@@ -202,12 +202,12 @@ Get all metadata records which contains the text 'boston':
         print csw.records[record].title  
 Boston Public Schools (2012)
 Socioeconomic Status (2000 - 2014)
-"MBTA Subway Lines
+MBTA Subway Lines
 Colleges and Universities in Boston
 Boston Planning Districts (BRA)
 ```
 
-Get all metadata in the US extent:
+Get all metadata in the US extent and containing the text 'boston':
 
 ```python
 >>> from owslib.fes import BBox
@@ -234,4 +234,33 @@ Socio-economic Status Index Range
 
 ## Accessing the pycsw catalogue from QGIS
 
-TODO
+Now you will access and query the pycsw GeoNode catalogue from within the QGIS desktop client. The screenshots here are generated using QGIS 2.14 LTR, but following versions should be similar.
+
+As a first thing, click on the *Web* menu, and then on *MetaSearch* > *MetaSearch*
+
+<img src="images/0052_metasearch_main.png" alt="MetaSearch main window" />
+
+Now click on the *New* button, and compile the form as following:
+
+* name: FOSS4G 2017 Workshop
+* url: http://localhost:8000/catalogue/csw?
+
+Click on the *Service Info* button, and the identification of the CSW service should appear in the MetaSearch main window:
+
+<img src="images/0053_metasearch_identification.png" alt="MetaSearch pycsw search identification" />
+
+Now, click in the *Search* tab, and try a basic search by clicking on the *Search* button. All of the pycsw records should show:
+
+<img src="images/0054_metasearch_simple_search.png" alt="MetaSearch simple search" />
+
+If you double click on one of the layer you should see the record information
+
+<img src="images/0055_metasearch_view_record.png" alt="MetaSearch pycsw record identification" />
+
+You can also see the GetRecords request performed to pycsw by clicking on the *View search results as xml* button
+
+<img src="images/0056_metasearch_xml.png" alt="MetaSearch pycsw xml record identification" />
+
+Try playing inserting different extent parameters and text to perform more advanced queries
+
+<img src="images/0057_metasearch_advanced_search.png" alt="MetaSearch advanced search" />
