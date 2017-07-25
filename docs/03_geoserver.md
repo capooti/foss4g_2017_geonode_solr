@@ -23,7 +23,7 @@ GeoNode, in its end user standard interface, right now makes use of just WMS, WF
 
 WMS, WFS and WFS-T services are provided by GeoServer. WMS-C services are provided by GeoWebCache, as you will see in the next workshop's tutorial. CSW services are provided, as you will see in a following workshop's tutorial, by pycsw.
 
-In this tutorial you will take a quick tour of the GeoServer administrative interface and you will have an overview of the GeoServer OGC services used by GeoNode: WMS and WFS. Then you will expore the GeoServer REST API, which provides to GeoNode the way to interact with GeoServer when it is not possible to use OGS standard calls.
+In this tutorial you will take a quick tour of the GeoServer administrative interface and you will have an overview of the GeoServer OGC services used by GeoNode: WMS and WFS. Then you will expore the GeoServer REST API, which provides to GeoNode the way to interact with GeoServer when it is not possible to use OGC services (OWS) standard calls.
 
 You will also use [OWSLib](https://geopython.github.io/OWSLib/), a Python library for interacting with OWS, in order to use these service with the Python language.
 
@@ -49,55 +49,55 @@ When accessing the home page of the GeoServer administrative site, using the url
 
 Clicking on each service capabilities link you will access the capabilities document for the given service type.
 
-A quickstart for using the GeoServer web administration interface can be found [here](http://docs.geoserver.org/latest/en/user/gettingstarted/web-admin-quickstart/index.html). For the purpose of the workshops, takes some minutes to explore the main sections of the GeoServer administrative interface which can be useful when using it with GeoNode. You can access to these sections by clicking on the menu items on the left of the GeoServer page:
+A quickstart for using the GeoServer web administration interface can be found [here](http://docs.geoserver.org/latest/en/user/gettingstarted/web-admin-quickstart/index.html). For the purpose of the workshop, takes some minutes to explore the main sections of the GeoServer administrative interface which can be useful when using it with GeoNode. You can access to these sections by clicking on the menu items on the left of the GeoServer page:
 
-*Server Status* provides a summary of the server configuration and status. From this page it is possible to see the location of the GeoServer data directory, the connections and memory used, the JVM Version and many other information
+**Server Status** provides a summary of the server configuration and status. From this page it is possible to see the location of the GeoServer data directory, the connections and memory used, the JVM Version and many other information
 
 <img src="images/0031_geoserver_server_status.png" alt="GeoServer Server Status" />
 
-*GeoServer Logs* provides the log tail of the GeoServer servlet process. Obviuosly it is possible to access to it from the shell using linux command such as *tail* and *less*
+**GeoServer Logs** provides the log tail of the GeoServer servlet process. Obviously it is possible to access to it from the shell using linux commands such as *tail* and *less*
 
 <img src="images/0032_geoserver_logs.png" alt="GeoServer Logs" />
 
-*GeoServer Contact Information* provides a form to set the contact information of the server. This information is used in the metadata provided by the WMS, WCS and WFS GetCapabilities documents.
+**GeoServer Contact Information** provides a form to set the contact information of the server. This information is used in the metadata provided by the WMS, WCS and WFS GetCapabilities documents.
 
 <img src="images/0033_geoserver_contact_info.png" alt="GeoServer Contact Information" />
 
-*Layer Preview* provides a convenient interface for exploring the layers which have been uploaded to GeoNode/GeoServer. It is possible to browse layers using the OpenLayers viewer, or getting the WMS/WFS response in a specific format
+**Layer Preview** provides a convenient interface for exploring the layers which have been uploaded to GeoNode/GeoServer. It is possible to browse layers using the OpenLayers viewer, or getting the WMS/WFS response in a specific format
 
 <img src="images/0034_layer_preview_1.png" alt="GeoServer Layer Preview" />
 
 <img src="images/0035_layer_preview_2.png" alt="GeoServer Layer Preview" />
 
-*Workspaces* Analogous to a namespace, a workspace is a container which organizes other items. In GeoServer, a workspace is often used to group similar layers together. By default GeoNode use a workspace named *geonode*, and all of the stores and layers are created within that workspace
+**Workspaces** Analogous to a namespace, a workspace is a container which organizes other items. In GeoServer, a workspace is often used to group similar layers together. By default GeoNode use a workspace named *geonode*, and all of the stores and layers are created within that workspace
 
 <img src="images/0036_geoserver_admin_workspaces.png" alt="GeoServer Workspaces" />
 
-*Stores* A store connects to a data source that contains raster or vector data. A data source can be a file or group of files, a table in a database, a single raster file, or a directory. GeoNode by default will create a GeoTIFF store for each uploaded raster dataset and a Shapefile store for each uploaded vector dataset. It is possible to configure GeoNode to use one or more PostGIS databases and have the vector dataset uploaded as a table in the database. Furthermore, it is possible to use in GeoNode any datasource supported by GeoServer by registering the GeoServer layer in GeoNode with the *updatelayers* management command
+**Stores** A store connects to a data source that contains raster or vector data. A data source can be a file or group of files, a table in a database, a single raster file, or a directory. GeoNode by default will create a GeoTIFF store for each uploaded raster dataset and a Shapefile store for each uploaded vector dataset. It is possible to configure GeoNode to use one or more PostGIS databases and have the vector dataset uploaded as a table in the database. Furthermore, it is possible to use in GeoNode any datasource supported by GeoServer by registering the GeoServer layer in GeoNode with the *updatelayers* management command
 
 <img src="images/0036_geoserver_admin_stores.png" alt="GeoServer Stores" />
 
 <img src="images/0036_geoserver_admin_stores_new.png" alt="GeoServer new store" />
 
-*Layers* provides a view of all of the layers contained in the GeoServer data directory. Layers can be raster or vector datasets. Each layer has a source of data, the *store*, which is associated with the *workspace* in which the store is defined. As you can see the layers you have uploaded to GeoNode are all part of the *geonode namespace*, and for each one a shapefile store was created
+**Layers** provides a view of all of the layers contained in the GeoServer data directory. Layers can be raster or vector datasets. Each layer has a source of data, the *store*, which is associated with the *workspace* in which the store is defined. As you can see the layers you have uploaded to GeoNode are all part of the *geonode namespace*, and for each one a shapefile store was created
 
 <img src="images/0036_geoserver_admin_layers.png" alt="GeoServer Layers" />
 
-*Styles* provides a view of all of the styles associated (or not) to the layers. By default there is at least one style associated to a layer, which is the default style. One layer can have multiple styles associated to it. Styles can be created using the GeoExplorer interface of GeoNode or the GeoServer admin interface
+**Styles** provides a view of all of the styles associated (or not) to the layers. By default there is at least one style associated to a layer, which is the default style. One layer can have multiple styles associated to it. Styles can be created using the GeoExplorer interface of GeoNode or the GeoServer admin interface
 
 <img src="images/0036_geoserver_admin_styles.png" alt="GeoServer Styles" />
 
-*WMTS*, *WCS*, *WFS*, *WMS*, *WPS* provide forms to set the services metadata such as the maintainer, title, abstract and other info. One important thing that can be done from this forms is to enable/disable service at global level.
+**WMTS**, **WCS**, **WFS**, **WMS**, **WPS** provide forms to set the services metadata such as the maintainer, title, abstract and other info. One important thing that can be done from this forms is to enable/disable these services at global level (ie: for all of the layers).
 
 <img src="images/0036_geoserver_admin_services.png" alt="GeoServer Services" />
 
-*Global Settings* provides a way to alter global GeoServer settings, such as the logging level, the behavior with misconfigured layers, the number of decimals to include in output and many others
+**Global Settings** provides a way to alter global GeoServer settings, such as the logging level, the behavior with misconfigured layers, the number of decimals to include in output and many others
 
 <img src="images/0036_geoserver_admin_settings.png" alt="GeoServer Global Settings" />
 
-*Tile Caching* you will be back to this in the next workshop tutorial, when you will have a look at GeoWebCache.
+**Tile Caching** you will be back to this in the next workshop tutorial, when you will have a look at GeoWebCache.
 
-*Security* when using GeoServer with GeoNode you shouldn't need to interact with this part of the GeoServer administrative site.
+**Security** when using GeoServer with GeoNode you shouldn't need to interact with this part of the GeoServer administrative site.
 
 ## A gentle introduction to the WMS and WFS OGC standards
 
@@ -218,7 +218,7 @@ The required parameters for a GetMap request are:
 
 For example here is a GetMap to get a map image of the "Socioeconomic Status (2000-2014)" layer (click on the link to see it): http://localhost:8080/geoserver/wms?LAYERS=geonode%3Asocioeconomic_status_2000_2014_9p1&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&STYLES=&FORMAT=image%2Fpng&SRS=EPSG%3A900913&BBOX=-7915207,5209947,-7910315,5214839&WIDTH=256&HEIGHT=256
 
-An useful way to see build a WMS GetMap request for a layer is by using the GeoServer Layer Preview interface. Go to the GeoServer admin page (http://localhost:8080/geoserver), then click on the *Data > Layer Preview* menu.
+An useful way to build a WMS GetMap request for a layer is by using the GeoServer Layer Preview interface. Go to the GeoServer admin page (http://localhost:8080/geoserver), then click on the *Data > Layer Preview* menu.
 
 Select the layer for which you want to build the WMS GetMap, a format and then the browser will open a new page with the GetMap request in the url
 
@@ -328,7 +328,7 @@ Spend some time inspecting the content of the output of this request. You should
 * an initial session with ServiceIdentification: this contains the metadata of the WFS service
 * a session with ServiceProvider: this provides metadata related to the contact point
 * a session with supported operations
-* finally a session all of the GeoServer vector layers you uploaded. For each layer are provided metadata such as the layer's name, title, abstract, keywords, default SRS and the bounding box
+* finally a session containing all of the GeoServer vector layers you uploaded. For each layer are provided metadata such as the layer's name, title, abstract, keywords, default SRS and the bounding box
 
 As you did with WMS, try to use OWSLib with Python to get to these metadata:
 
@@ -385,6 +385,8 @@ MBTA Subway Lines (Massachusetts Bay Transportation Authority)
 ```
 
 #### DescribeFeatureType
+
+DescribeFeatureType returns a description of feature types supported by a WFS service
 
 http://localhost:8080/geoserver/wfs?SERVICE=WFS&REQUEST=DescribeFeatureType&TYPENAME=geonode%3Acollegesuniversities_gap
 
