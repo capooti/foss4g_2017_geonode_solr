@@ -83,6 +83,7 @@ $ cd geonode
 $ git checkout -b 2.6.1 tags/2.6.1
 $ pip install -e .
 $ pip install pygdal==1.11.3.3
+$ pip install django-jsonfield-compat
 $ pip install ipython
 $ paver setup
 $ paver sync
