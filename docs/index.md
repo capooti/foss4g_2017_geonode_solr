@@ -26,7 +26,7 @@ You need to take your notebook at the workshop. The notebook should have at leas
 * [QGIS](http://www.qgis.org/en/site/forusers/download.html)
 * [Firefox](https://www.mozilla.org/en-US/firefox/new/)
 
-Note: you could use [Chrome](https://www.google.com/chrome/browser/desktop/index.html) in place of Firefox for all of the tutorials of this workshop. Though, one tutorial will use the [Firefox Developer Tools](https://developer.mozilla.org/en-US/docs/Tools/Tools_Toolbox) to inspect requests to the OGC services. If using Chrome you should be able to follow along that tutorial using the [Chrome Developer Tools](https://developer.chrome.com/devtools) 
+Note: you could use [Chrome](https://www.google.com/chrome/browser/desktop/index.html) in place of Firefox for all of the tutorials of this workshop. Though, one tutorial will use the [Firefox Developer Tools](https://developer.mozilla.org/en-US/docs/Tools/Tools_Toolbox) to inspect requests to the OGC services. If using Chrome you should be able to follow along that tutorial using the [Chrome Developer Tools](https://developer.chrome.com/devtools)
 
 ## Outline of tutorials
 
@@ -38,8 +38,7 @@ Note: you could use [Chrome](https://www.google.com/chrome/browser/desktop/index
 * [Tiles caching with GeoWebCache](04_geowebcache.md)
 * [Catalogue services with pycsw](05_pycsw.md)
 * [Spatial queries with PostGIS](06_postgis.md)
-* Debugging GeoNode OGC services with Firebug
-* Using GeoNode OGC services with external clients such as QGIS (WMS, WFS, CSW) and OpenLayers
+* [Using GeoNode OGC services with external clients](07_ows_integration.md)
 * Using GeoNode management commands
 * Batch upload and register of new layers
 * Running asynchronous tasks using the task queues (Celery/RabbitMQ)

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>OL WMS Integration</title>
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.2.0/css/ol.css" type="text/css">
+    <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="https://openlayers.org/en/v4.2.0/build/ol.js"></script>
+  </head>
+  <body>
+    <div id="map" class="map"></div>
+    <script>
+      var layers = [
+        new ol.layer.Tile({
+          source: new ol.source.OSM()
+        }),
+        new ol.layer.Tile({
+          extent: [-7926000, 5190846, -7895123, 5225000],
+          source: new ol.source.TileWMS({
+            url: 'http://localhost:8080/geoserver/wms',
+            params: {
+                      'LAYERS': 'geonode:socioeconomic_status_2000_2014_9p1,geonode:subwaylines_p_odp',
+                      'TILED': true
+                    },
+            serverType: 'geoserver'
+          })
+        })
+      ];
+      var map = new ol.Map({
+        layers: layers,
+        target: 'map',
+        view: new ol.View({
+          center: [-7910000, 5210000],
+          zoom: 11
+        })
+      });
+    </script>
+  </body>
+</html>
