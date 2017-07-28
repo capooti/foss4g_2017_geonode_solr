@@ -113,7 +113,7 @@ Right click on that layer, and press "Layer Styles". The Styles Editor widget wi
 
 For this layer, we will create one rule for each Boston Subway Line (Blue, Green, Orange, Red, Silver). The "MBTA Subway" layer has an attribute, named "LINE", which is set to "BLUE", "GREEN", "ORANGE", "RED", "SILVER", and that can therefore be used for this purpose.
 
-Select the first rule (named "Untitled 1"), and press the "Edit" button under it.
+Select the default rule (named "Blue Line" in the figure), and press the "Edit" button under it.
 
 <img src="images/0017_style_editor.png" alt="Style Editor" />
 
@@ -125,7 +125,7 @@ In the "Advanced" tab, check the "Limit by condition" checkbox. Then add the fol
 
 <img src="images/0017_style_editor_02.png" alt="Style Editor" />
 
-Repeat the process for the other lines. To add new rules to the default two ones, click on the "Add" button under the "Rules" area.
+Repeat the process for the other lines. To add new rules to the default one, click on the "Add" button under the "Rules" area.
 
 Those are all the rules which you will need to add:
 
