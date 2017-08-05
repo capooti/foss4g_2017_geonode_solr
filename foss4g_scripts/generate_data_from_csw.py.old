@@ -1,0 +1,102 @@
+import os
+from random import randint
+
+from osgeo import ogr, osr
+from owslib.csw import CatalogueServiceWeb
+
+from geonode.layers.models import Layer
+from geonode.base.models import TopicCategory, Region
+from geonode.layers.utils import upload
+
+
+out_path = '/workshop/out'
+
+
+def assign_random_category(resource):
+    """ Assign a random category to a resource """
+    random_index = randint(0, TopicCategory.objects.all().count() - 1)
+    tc = TopicCategory.objects.all()[random_index]
+    resource.category = tc
+    resource.save()
+
+
+def assign_regions(resource):
+    """ Assign up to 5 regions to resource """
+    for i in range(0, randint(0, 5)):
+        random_index = randint(0, Region.objects.all().count() - 1)
+        region = Region.objects.all()[random_index]
+        resource.regions.add(region)
+
+
+def create_polygon(x0, y0, x1, y1):
+    ring = ogr.Geometry(ogr.wkbLinearRing)
+    ring.AddPoint(x0, y0)
+    ring.AddPoint(x0, y1)
+    ring.AddPoint(x1, y1)
+    ring.AddPoint(x1, y0)
+    ring.AddPoint(x0, y0)
+    poly = ogr.Geometry(ogr.wkbPolygon)
+    poly.AddGeometry(ring)
+    return poly
+
+
+def write_shapefile(shp_name, poly):
+    srs = osr.SpatialReference()
+    srs.ImportFromEPSG(4326)
+    out_shp = '%s/%s.shp' % (out_path, shp_name)
+    driver = ogr.GetDriverByName('Esri Shapefile')
+    if os.path.exists(out_shp):
+        driver.DeleteDataSource(out_shp)
+    ds = driver.CreateDataSource(out_shp)
+    layer = ds.CreateLayer(shp_name, srs, ogr.wkbPolygon)
+    id_field = ogr.FieldDefn("id", ogr.OFTInteger)
+    layer.CreateField(id_field)
+    defn = layer.GetLayerDefn()
+    feat = ogr.Feature(defn)
+    geom = ogr.CreateGeometryFromWkt(poly.ExportToWkt())
+    feat.SetGeometry(geom)
+    feat.SetField('id', 1)
+    layer.CreateFeature(feat)
+
+
+# main script
+csw = CatalogueServiceWeb('http://hh.worldmap.harvard.edu/registry/hypermap/csw')
+
+count = 0
+for startposition in range(0, 100, 10): # range(0, 100, 10):
+    csw.getrecords2(maxrecords=10, startposition=startposition)
+    print csw.results
+    for uuid in csw.records:
+        #import ipdb;ipdb.set_trace()
+        record = csw.records[uuid]
+        if record.bbox.crs.code == 4326:
+            count += 1
+            title = record.title
+            abstract = record.abstract
+            source = record.source
+            date = record.modified
+            print 'Importing %s' % title
+            poly = create_polygon(
+                        float(record.bbox.minx),
+                        float(record.bbox.miny),
+                        float(record.bbox.maxx),
+                        float(record.bbox.maxy)
+                    )
+            shp_name = 'shape_%s' % count
+            write_shapefile(shp_name, poly)
+            path = '%s/%s.shp' % (out_path, shp_name)
+            # let's remove the layer if already exists in GeoNode
+            typename = 'geonode:%s' % shp_name
+            if Layer.objects.filter(typename=typename).exists():
+                print 'Removing layer %s' % typename
+                Layer.objects.filter(typename=typename).delete()
+            upload(path, title=shp_name)
+            layer = Layer.objects.get(title=shp_name)
+            layer.title = title
+            layer.abstract = abstract
+            layer.date = record.modified[0:10]
+            layer.save()
+            assign_random_category(layer)
+            assign_regions(layer)
+            print 'Imported record %s' % count
+print 'Done.'

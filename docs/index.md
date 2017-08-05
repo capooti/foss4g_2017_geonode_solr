@@ -30,7 +30,7 @@ Note: you could use [Chrome](https://www.google.com/chrome/browser/desktop/index
 
 ## Outline of tutorials
 
-* [Introduction](introduction.md)
+* Introduction
 * [Setup the workshop environment](00_setup_the_workshop_environment.md)
 * [A GeoNode quickstart](01_geonode_quickstart.md)
 * [Programming GeoNode with Python](02_programming_geonode_with_python.md)
@@ -40,7 +40,6 @@ Note: you could use [Chrome](https://www.google.com/chrome/browser/desktop/index
 * [Spatial queries with PostGIS](06_postgis.md)
 * [Using GeoNode OGC services with external clients](07_ows_integration.md)
 * [Using GeoNode management commands](08_geonode_commands.md)
-* Taking advantage of a search engine (Solr) in GeoNode: a quick tour of Solr
-* Indexing GeoNode content in Solr using Python and using Solr to search and analyze GeoNode data
-* Using Python and OWSLib to index OGC services in Solr
+* [Using a search engine with GeoNode: a quick tour of Solr](09_solr.md)
 * Running asynchronous tasks using the task queues (Celery/RabbitMQ)
+* Adding a custom application to GeoNode
