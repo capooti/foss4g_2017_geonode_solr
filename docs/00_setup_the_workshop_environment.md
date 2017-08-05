@@ -47,7 +47,8 @@ You will install Python 2.7 (needed by GeoNode, which does not run on Python 3, 
 
 ```sh
 $ sudo apt-get update
-$ sudo apt install python virtualenv python-dev build-essential gdal-bin libgdal-dev default-jre
+$ sudo apt install python virtualenv python-dev build-essential gdal-bin libgdal-dev default-jre rabbitmq-server
+$ sudo ln -s /usr/lib/x86_64-linux-gnu/libproj.so.9 /usr/lib/x86_64-linux-gnu/libproj.so.0
 ```
 
 GeoServer and Solr both run on top of a Java Runtime Environment. default-jre is the official Ubuntu JRE: make sure java is working by running the java -version command:
