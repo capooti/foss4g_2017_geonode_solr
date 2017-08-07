@@ -41,5 +41,5 @@ Note: you could use [Chrome](https://www.google.com/chrome/browser/desktop/index
 * [Using GeoNode OGC services with external clients](07_ows_integration.md)
 * [Using GeoNode management commands](08_geonode_commands.md)
 * [Using a search engine with GeoNode: a quick tour of Solr](09_solr.md)
+* [Developing a custom application for GeoNode](10_customization.md)
 * Running asynchronous tasks using the task queues (Celery/RabbitMQ)
-* Adding a custom application to GeoNode
