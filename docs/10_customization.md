@@ -31,55 +31,7 @@ $ mkdir -p geonode/sol/templates/solr
 $ touch geonode/solr/templates/solr/index.html
 ```
 
-Add this html code in the *geonode/solr/index.html* template:
-
-```html
-{{ raw }}
-
-{% extends "site_base.html" %}
-{% load i18n %}
-{% load url from future %}
-{% block title %} {{ block.super }} {% endblock %}
-{% block body_class %}Solr Search{% endblock %}
-{% block body_outer %}
-{% block body %}
-
-    <h3>Search Metadata</h3>
-    <form type="GET" action=".">
-        <input  id="search_text" type="text" name="search_text"  placeholder="Search..." >
-        <button id="search_submit" type="submit" >Submit</button>
-    </form>
-
-    <p>Displaying 10 of {{ count }} results</p>
-
-    {% for document in docs %}
-    <h4>{{ document.title }}</h4>
-    <ul>
-        <li>Score: {{ document.score }}</li>
-        <li>Abstract: {{ document.abstract | truncatechars:200 }}
-        <li>Category: {{ document.category }}</li>
-        <li>Date: {{ document.modified_date.0 }}</li>
-        <li>Regions:</li>
-            <ul>
-            {% for region in document.regions %}
-                <li>{{ region }}</li>
-            {% endfor %}
-            </ul>
-        <li>Keywords:</li>
-            <ul>
-            {% for keyword in document.keywords %}
-                <li>{{ keyword }}</li>
-            {% endfor %}
-            </ul>
-    </ul>
-    {% endfor %}
-
-{% endblock body %}
-{% block sidebar %}{% endblock sidebar %}
-{% endblock body_outer %}
-
-{{ endraw }}
-```
+Add [this html code](https://gist.github.com/capooti/77fb92ebaa505760488fbb524e917923) in the *geonode/solr/index.html* template.
 
 ## Create the url dispatcher
 
