@@ -1,14 +1,87 @@
-# Running asynchronous tasks using the task queues (Celery/RabbitMQ)
+# Running asynchronous tasks using a task queue (Celery/RabbitMQ)
+
+The HTTP request/response cycle can be kept synchronous as far as there are very quick interactions (few milliseconds) between the client and the servers.
+
+Unfortunately there are cases when the cycle become slower and slower because of some time consuming tasks (1, 2 seconds or even more...): in these situations the best practice for a web application is to process asynchronously these tasks using a task queue.
+
+Furthermore some tasks must be scheduled, or need to interact with external services, which can take time.
+In those cases we run these longer tasks separately, in different processes.
+
+<img src="images/celery/sync_vs_async.png" alt="Sync vs Async processing" />
+
+## Task queues
+
+Typical uses cases in a web application where a task queue is the way to go:
+
+* Asynchronous tasks such as:
+  * Thumbnails generation
+  * Notifications
+  * Data denormalization
+  * Search index synchronization
+* Replacing cron jobs
+  * Backups
+  * Maintenance jobs
+  * pdf reports
+
+In the case of a geoportal platform as GeoNode the use cases can be extended to:
+
+* Upload a shapefile to the server (next generation GeoNode)
+* OGC services harvesting (Harvard Hypermap)
+* GeoProcessing operations
+* Geodata maintenance
+
+### Asynchronous processing model
+
+The asynchronous processing model is composed by services that create processing tasks and by services which consume and process these tasks accordingly.
+
+A **message queue** is a **broker** which facilitates message passing by providing a protocol or interface which other services can access. In the context of a web application as GeoNode the **producer** is the client application that creates messages based on the user interaction (for example a user that saves metadata, and sends a synchronization process to the search engine). The **consumer** is a daemon process (**Celery** in the case of GeoNode) that can consume the messages and run the needed process.
+
+A more complex use case is when there are two or more applications which are the producer and consumer of the messages. For example the user of the web application, written in Django, could produce a message which is consumed by a daemon of an another program.
+
+<img src="images/celery/async_model.png" alt="Async processing model" />
+
+### Celery and RabbitMQ
+
+Celery is the default task queue for GeoNode. It provides:
+
+* asynchronous task queue/job queue based on distributed message passing
+* focused on real-time operation, but supports scheduling as well
+* the execution units, called tasks, are executed concurrently on a single or more worker servers
+* it supports many message brokers (RabbitMQ, Redis, MongoDB, CouchDB, ...)
+* written in Python but it can operate with other languages
+* great integration with Django (it was born as a Django application)
+* it has great monitoring tools (Flower, django-celery-results)
+
+RabbitMQ is the messabe broker which comes by default with GeoNode (it is possible to replace it with something different like Redis):
+
+* as a message broker: it accepts and forwards messages
+* it is by far the most widely deployed open source broker (35k+ deployments)
+* support many message protocols
+* supported by many operating systems and languages
+
+<img src="images/celery/architecture.png" alt="Celery and RabbitMQ architecture" />
+
+## Using Celery in your application
+
+In this tutorial you will improve the application developed in the previous tutorial.
+
+As the metadata Solr synchronization process can slow down the user interaction with the application, you will send that process asynchronously using Celery and RabbitMQ. You will see how you can use Celery to reliably process these tasks, and how to use the [Flower Celering monitoring tool](http://flower.readthedocs.io/) to analyze the processed tasks.
 
 ## Using signals
 
-Create an utils.py file and copy this python code, readapted from a previous tutorial (file in foss4g_scripts/geonode2solr.py):
+You cannot run the synchronization task from the Django view, as you did previously, as you want to send that process asynchronously to the task queue (RabbitMQ).
 
-```sh
-$ touch geonode/solr/utils.py
-```
+One way to run the task is by forking the GeoNode metadata update view. But forking is the wrong way to do things as it introduces a lot of complications when updating to a newer GeoNode version.
 
-copy this code in utils.py:
+So, how can you execute the sync process without forking GeoNode? [Django signals](https://docs.djangoproject.com/en/1.11/topics/signals/) provides a convenient way to do this.
+
+> Django includes a “signal dispatcher” which helps allow decoupled applications get notified when actions occur elsewhere in the framework. In a nutshell, signals allow certain senders to notify a set of receivers that some action has taken place. They’re especially useful when many pieces of code may be interested in the same events.
+
+Django provides a set of built-in signals that let user code get notified by Django itself of certain actions. These include some useful notifications like for example the notification that happens when saving an instance.
+
+You will use the post_save signal which is run when a GeoNode layer is saved to run the Solr synchronization code.
+
+For this purpose, create an *geonode/solr/utils.py* file and copy this python code, readapted from a previous tutorial (check the *foss4g_scripts/geonode2solr.py* file):
 
 ```python
 import json
@@ -55,14 +128,7 @@ def layer_to_solr(layer):
     print res.json()
 ```
 
-Create the signals.py file
-
-```sh
-$ /workshop/geonode
-$ touch geonode/solr/signals.py
-```
-
-Copy this code in signals.py:
+Now, create the *geonode/solr/signals.py* file and add this code in it:
 
 ```python
 from django.db.models.signals import post_save
@@ -76,32 +142,36 @@ def sync_solr(sender, instance, created, **kwargs):
 post_save.connect(sync_solr, sender=Layer)
 ```
 
-Import signals in geonode/solr/__init__.py:
+Finally import signals in *geonode/solr/__init__.py*:
 
 ```python
 import signals
 ```
 
-
-
 ## Test the signal
 
-Now try updating one of the layer, for example:
+Now to test the layer post_save signal you just created, try updating one of the layer (for this purpose, go the layer page, then click on *Edit Layer* then on *Edit Metadata*)
 
-Then check if in Solr the metadata you updated were correctly synced:
+Change some of the metadata and then check if in Solr the metadata you updated were correctly synced:
 
 http://localhost:8983/solr/boston/select?indent=on&q=name:%22shape_1%22&wt=json
 
+(you need to change the q=name parameter to your layer's name)
+
 ## Process asynchronously with Celery
 
-Add this at the end of geonode/local_settings.py:
+Now you found a great way to run the *layer_to_solr* method without forking GeoNode, but you are still doing a synchronous processing. Let's add Celery and RabbitMQ to the mix!
+
+Add this at the end of *geonode/local_settings.py*:
 
 ```python
 BROKER_URL = 'amqp://guest:guest@localhost:5672//'
 CELERY_ALWAYS_EAGER = False
 ```
 
-Create this geonode/solr/celery_app.py file:
+*BROKER_URL* is the location where RabbitMQ is running. You will send the tasks as the *guest* user. In production is recommendable to create a specific user with a strong password.
+
+Now create this *geonode/solr/celery_app.py* file, which will make your custom tasks discoverable by Celery:
 
 ```python
 from __future__ import absolute_import
@@ -116,7 +186,7 @@ apps = settings.INSTALLED_APPS + ('geonode.solr',)
 app.autodiscover_tasks(lambda: apps)
 ```
 
-Create this geonode/solr/tasks.py file:
+Create this *geonode/solr/tasks.py* file which contain the Celery task (the **consumer**, in the jargon, while the post_save signal is the **producer**):
 
 ```python
 from __future__ import absolute_import
@@ -133,7 +203,7 @@ def sync_to_solr(layer_id):
     layer_to_solr(layer)
 ```
 
-Modify in this wayt the geonode/solr/signals.py file:
+Now modify in this way the *geonode/solr/signals.py* file:
 
 ```python
 from django.db.models.signals import post_save
@@ -150,7 +220,7 @@ def sync_solr(sender, instance, created, **kwargs):
 post_save.connect(sync_solr, sender=Layer)
 ```
 
-Run Celery in another shell:
+Let's see if everything works. Run the Celery worker by opening another shell (in production you should consider using a tool such as [supervisord](http://supervisord.org/)):
 
 ```sh
 $ . /workshop/env/bin/activate
@@ -158,7 +228,7 @@ $ cd /workshop/geonode/geonode
 $ celery -A celery_app worker -l info
 ```
 
-Try saving the metadata of a layer, looking at the Celery log you should see that the Solr task is being executed:
+Try saving the metadata of a layer. Looking at the Celery log you should see that the Solr task is being executed:
 
 ```sh
 $ celery -A celery_app worker -l info
@@ -195,16 +265,16 @@ $ celery -A celery_app worker -l info
 [2017-08-07 16:39:33,194: WARNING/MainProcess] celery@ubuntu-xenial ready.
 [2017-08-07 16:40:11,846: INFO/MainProcess] Received task: geonode.solr.tasks.sync_to_solr[6ca1ebbe-4de0-4aec-9fad-0352ca731eb6]
 [2017-08-07 16:40:11,910: WARNING/Worker-2] Syncing layer geonode:shape_1 with Solr
-[2017-08-07 16:40:11,939: WARNING/Worker-2] {'category': u'Farming', 'modified_date': '2017-07-30T18:02:00Z', 'regions': [u'Hungary', u'Italy'], 'username': u'admin', 'name': u'shape_1', 'title': u'Shape 1 (synced from a celery task )', 'keywords': [u'boston', u'foss4g', u'geonode', u'geoserver', u'gis'], 'abstract': u'synced from signals 2', 'id': '2ebb1de2-757b-11e7-b6ae-02d8e4477a33', 'bbox': 'ENVELOPE(-31.2600000000,34.1000000000,70.0300000000,27.5900000000)'}
+[2017-08-07 16:40:11,939: WARNING/Worker-2] {'category': u'Farming', 'modified_date': '2017-07-30T18:02:00Z', 'regions': [u'Hungary', u'France'], 'username': u'admin', 'name': u'shape_1', 'title': u'Shape 1 (synced from a celery task )', 'keywords': [u'boston', u'foss4g', u'geonode', u'geoserver', u'gis'], 'abstract': u'synced from signals 2', 'id': '2ebb1de2-757b-11e7-b6ae-02d8e4477a33', 'bbox': 'ENVELOPE(-31.2600000000,34.1000000000,70.0300000000,27.5900000000)'}
 [2017-08-07 16:40:11,993: WARNING/Worker-2] {u'responseHeader': {u'status': 0, u'QTime': 13}}
 [2017-08-07 16:40:11,994: INFO/MainProcess] Task geonode.solr.tasks.sync_to_solr[6ca1ebbe-4de0-4aec-9fad-0352ca731eb6] succeeded in 0.144630687999s: None
 ```
 
 ## Celery Monitoring
 
-### Using flower
+A great Celery monitoring tool is Flower.
 
-Install and run flower:
+Install and run Flower at port 5555:
 
 ```
 $ . /workshop/env/bin/activate
@@ -213,8 +283,10 @@ $ pip install flower==0.9.2
 $ celery flower -A celery_app --port=5555
 ```
 
+Now browse at http://localhost:5555 and you should see the Flower main interface. Try saving some of the layers, and you should see a new task for each layer you save in Flower.
+
 <img src="images/celery/flower_tasks.png" alt="Monitor Celery tasks with Flower" />
 
-To see a failing task one way is to stop Solr
+If you want to see a failing task, as in the previous image, one way is to stop Solr and then saving a layer. You can see details of the error which made the task failing by clicking on the failing task itself in the Flower interface
 
 <img src="images/celery/flower_error.png" alt="Monitor a Celery task error with Flower" />
