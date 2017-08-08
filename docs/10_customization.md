@@ -33,15 +33,15 @@ $ touch geonode/solr/templates/solr/index.html
 
 Add this html code in the *geonode/solr/index.html* template:
 
-```
-{{ "{% extends " }}%} "site_base.html" %}
+```html
+{{ raw }}
+
+{% extends "site_base.html" %}
 {% load i18n %}
 {% load url from future %}
-
 {% block title %} {{ block.super }} {% endblock %}
 {% block body_class %}Solr Search{% endblock %}
 {% block body_outer %}
-
 {% block body %}
 
     <h3>Search Metadata</h3>
@@ -75,9 +75,10 @@ Add this html code in the *geonode/solr/index.html* template:
     {% endfor %}
 
 {% endblock body %}
-
 {% block sidebar %}{% endblock sidebar %}
 {% endblock body_outer %}
+
+{{ endraw }}
 ```
 
 ## Create the url dispatcher
