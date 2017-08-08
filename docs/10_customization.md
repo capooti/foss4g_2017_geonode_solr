@@ -33,7 +33,7 @@ $ touch geonode/solr/templates/solr/index.html
 
 Add this html code in the *geonode/solr/index.html* template:
 
-```html
+```
 {% extends "site_base.html" %}
 {% load i18n %}
 {% load url from future %}
