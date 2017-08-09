@@ -23,6 +23,7 @@ You need to take your notebook at the workshop. The notebook should have at leas
 
 * [git](https://git-scm.com/downloads)
 * [Vagrant](https://www.vagrantup.com/downloads.html)
+* [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 * [QGIS](http://www.qgis.org/en/site/forusers/download.html)
 * [Firefox](https://www.mozilla.org/en-US/firefox/new/)
 
