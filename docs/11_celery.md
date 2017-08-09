@@ -42,7 +42,7 @@ A more complex use case is when there are two or more applications which are the
 
 ### Celery and RabbitMQ
 
-Celery is the default task queue for GeoNode. It provides:
+[Celery](http://www.celeryproject.org/) is the default task queue for GeoNode. It provides:
 
 * asynchronous task queue/job queue based on distributed message passing
 * focused on real-time operation, but supports scheduling as well
@@ -52,7 +52,7 @@ Celery is the default task queue for GeoNode. It provides:
 * great integration with Django (it was born as a Django application)
 * it has great monitoring tools (Flower, django-celery-results)
 
-RabbitMQ is the messabe broker which comes by default with GeoNode (it is possible to replace it with something different like Redis):
+[RabbitMQ](https://www.rabbitmq.com) is the messabe broker which comes by default with GeoNode (it is possible to replace it with something different like Redis):
 
 * as a message broker: it accepts and forwards messages
 * it is by far the most widely deployed open source broker (35k+ deployments)
