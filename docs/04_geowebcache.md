@@ -198,7 +198,7 @@ http://localhost:8080/geoserver/gwc/service/wmts?SERVICE=WMTS&REQUEST=GetTile&VE
 While OWSLib does not support WMS-C and TMS, you can use OWSLib to interact with WMTS:
 
 ```python
-
+>>> from owslib.wmts import WebMapTileService
 >>> wmts = WebMapTileService('http://localhost:8080/geoserver/gwc/service/wmts?')
 >>> print wmts.identification.title
 Web Map Tile Service - GeoWebCache
