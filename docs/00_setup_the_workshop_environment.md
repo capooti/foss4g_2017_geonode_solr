@@ -43,7 +43,7 @@ GeoNode it is based on Django, which is a great Python web framework. Other core
 
 You will use the Ubuntu apt package manager to install the requirements for the environment.
 
-You will install Python 2.7 (needed by GeoNode, which does not run on Python 3, the default Python version at Ubuntu 16.04) and all of the other requirements, including Java:
+You will install Python 2.7 (needed by GeoNode, which does not run on Python 3, the default Python version at Ubuntu 16.04) and all of the other requirements, including Java, GDAL and RabbitMQ:
 
 ```sh
 $ sudo apt-get update

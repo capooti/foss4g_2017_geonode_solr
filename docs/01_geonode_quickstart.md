@@ -59,7 +59,7 @@ Edit the *biketrails_arc_p* layer using the following information:
   * Title: "Bike Trails"
   * Abstract: "2009 MBTA bike trails"
   * Regions: "United States of America"
-  * Keywords: "Boston, FOSS4G2017, Commute"
+  * Keywords: "boston, FOSS4G2017, Commute"
   * Category: "Transportation"
 
 <img src="images/0013_edit_metadata.png" alt="Edit Metadata" />
@@ -145,21 +145,21 @@ Create three different rules, using the attribute *SESdx14*:
 
 Rule 1:
 * Name: "Low"
-* Color: Red
+* Fill Color: Red
 * Match: Any of the condition
 * Condition 1: "SESdx14 >= -6"
 * Condition 2: "SESdx14 < -2"
 
 Rule 2:
 * Name: "Mid"
-* Color: Yellow
+* Fill Color: Yellow
 * Match: Any of the condition
 * Condition 1: "SESdx14 >= -2"
 * Condition 2: "SESdx14 < 1"
 
 Rule 3:
 * Name: "High"
-* Color: Green
+* Fill Color: Green
 * Match: Any of the condition
 * Condition 1: "SESdx14 >= 1"
 
