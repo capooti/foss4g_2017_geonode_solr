@@ -8,11 +8,11 @@ CSW is a standard for exposing a catalogue of geospatial entities on HTTP. In a 
 
 ## Using pycsw in GeoNode
 
-In GeoNode you can easily access to the CSW record for one layer by clicking in the *Download Metadata* button in the layer page. A form will pop up and you will be able to access to metadata provided by pycsw in a series of formats (Atom, Dublin, FGDC, Text, HTML and many others)
+In GeoNode you can easily access to the CSW record for one layer by clicking in the *Download Metadata* button in the layer page. A form will pop up and you will be able to access to metadata provided by pycsw in a series of different formats (Atom, Dublin, FGDC, Text, HTML and many others)
 
 <img src="images/0050_download_metadata.png" alt="GeoNode download metadata" />
 
-For example, clicking on the *ISO* link you will access to the metadata for the layer in the ISO format, which corresponds to this *GetRecordById* request in pycsw:
+For example, by clicking on the *ISO* link you will access to the metadata for the layer in the ISO format, which corresponds to this *GetRecordById* request in pycsw:
 
 http://localhost:8000/catalogue/csw?outputschema=http%3A%2F%2Fwww.isotc211.org%2F2005%2Fgmd&service=CSW&request=GetRecordById&version=2.0.2&elementsetname=full&id=8bcf5bfc-5cfc-11e7-8103-02d8e4477a33
 
@@ -46,7 +46,7 @@ pycsw implements all of the CSW standard operations, including the optional ones
 * *Harvest* (optional) create/update metadata by asking the server to 'pull' metadata from somewhere
 * *Transaction* (optional) create/edit metadata by 'pushing' the metadata to the server
 
-In the following you will have a look at some of this operations.
+In the following you will have a look at some of these operations.
 
 ### GetCapabilities
 
@@ -59,7 +59,7 @@ You should recognize in the pycsw GetCapabilities output the following sections:
 * Operations metadata (one for each supported operation)
 * Filter capabilities
 
-You can change the metadata of the pycsw server (service identification and provider sections) of your GeoNode instance by editing the */workshop/geonode/geonode/local_settings.py* file. Open that file (or create it if you still have not), and add the following information, changing the settings to your needs:
+As with many other GeoNode settings, you can change the metadata of the pycsw server (service identification and provider sections) of your GeoNode instance by editing the */workshop/geonode/geonode/local_settings.py* file. Open that file (or create it if you still have not), and add the following information, changing the settings to your needs:
 
 ```python
 # pycsw settings
@@ -112,7 +112,7 @@ PYCSW = {
 }
 ```
 
-Now check if the GetCapabilities response is correctly updated by pycsw
+Now restart GeoNode and check if the GetCapabilities response is correctly updated by pycsw
 
 <img src="images/0051_pycsw_getcapabilities.png" alt="pycsw GetCapabilities response" />
 
@@ -212,13 +212,13 @@ Get all metadata in the US extent and containing the text 'boston':
 ```python
 >>> from owslib.fes import BBox
 >>> us_bbox = BBox([-125,24,-66,49])
->>> csw.getrecords2(constraints=[boston_query, us_bbox])
+>>> csw.getrecords2(constraints=[boston_query])
 >>> csw.getrecords2(constraints=[us_bbox])
 >>> print csw.results
 {'matches': 1, 'nextrecord': 0, 'returned': 1}
 ```
 
-Get a record by the id:
+Get a record by the id (make sure to use the uuid of one of the layers you uploaded):
 
 ```python
 >>> csw.getrecordbyid(id=['8bcf5bfc-5cfc-11e7-8103-02d8e4477a33'])

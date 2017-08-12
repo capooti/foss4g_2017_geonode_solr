@@ -85,6 +85,7 @@ Now check if the view was correctly created and registered in PostGIS by checkin
 
 ```sh
 geonode=# select * from geometry_columns;
+
  f_table_catalog | f_table_schema |            f_table_name             | f_geometry_column | coord_dimension | srid |     type     
 -----------------+----------------+-------------------------------------+-------------------+-----------------+------+--------------
  geonode         | public         | collegesuniversities_gap            | the_geom          |               2 | 4326 | POINT

@@ -30,7 +30,7 @@ You will also use [OWSLib](https://geopython.github.io/OWSLib/), a Python librar
 Before starting, make sure GeoNode and GeoServer are up and running at: http://localhost:8000/ and http://localhost:8080/geoserver/
 Make sure you are logged in both of them.
 
-If GeoNode/GeoServer are not running, activate the virtualenv and run the Django development server:
+If GeoNode/GeoServer are not running, activate the virtualenv, start geoserver and run the Django development server:
 
 ```sh
 $ cd /workshop/
@@ -49,7 +49,7 @@ When accessing the home page of the GeoServer administrative site, using the url
 
 Clicking on each service capabilities link you will access the capabilities document for the given service type.
 
-A quickstart for using the GeoServer web administration interface can be found [here](http://docs.geoserver.org/latest/en/user/gettingstarted/web-admin-quickstart/index.html). For the purpose of the workshop, takes some minutes to explore the main sections of the GeoServer administrative interface which can be useful when using it with GeoNode. You can access to these sections by clicking on the menu items on the left of the GeoServer page:
+A quickstart for using the GeoServer web administration interface can be found [here](http://docs.geoserver.org/latest/en/user/gettingstarted/web-admin-quickstart/index.html). For the purpose of the workshop, takes some minutes to explore the main sections of the GeoServer administrative interface which can be useful when using it with GeoNode. You can access to these sections by clicking on the menu items on the left of the GeoServer page.
 
 **Server Status** provides a summary of the server configuration and status. From this page it is possible to see the location of the GeoServer data directory, the connections and memory used, the JVM Version and many other information
 
@@ -388,42 +388,59 @@ MBTA Subway Lines (Massachusetts Bay Transportation Authority)
 
 DescribeFeatureType returns a description of feature types supported by a WFS service
 
-http://localhost:8080/geoserver/wfs?SERVICE=WFS&REQUEST=DescribeFeatureType&TYPENAME=geonode%3Acollegesuniversities_gap
+http://localhost:8080/geoserver/wfs?SERVICE=WFS&REQUEST=DescribeFeatureType&TYPENAME=geonode%3Asocioeconomic_status_2000_2014_9p1
 
 Response:
 
 ```xml
+
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:geonode="http://www.geonode.org/" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:wfs="http://www.opengis.net/wfs/2.0" elementFormDefault="qualified" targetNamespace="http://www.geonode.org/">
-  <xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://localhost:8080/geoserver/schemas/gml/3.2.1/gml.xsd?access_token=0UF2WuHEDd1EsprnsWM1xoE4UOfzgd"/>
-  <xsd:complexType name="collegesuniversities_gapType">
+  <xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="http://localhost:8080/geoserver/schemas/gml/3.2.1/gml.xsd?access_token=hVXyQgufzQc4nkDfI4sul9TihL1lHa"/>
+  <xsd:complexType name="socioeconomic_status_2000_2014_9p1Type">
     <xsd:complexContent>
       <xsd:extension base="gml:AbstractFeatureType">
         <xsd:sequence>
-          <xsd:element maxOccurs="1" minOccurs="0" name="the_geom" nillable="true" type="gml:PointPropertyType"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="Status" nillable="true" type="xsd:string"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="Score" nillable="true" type="xsd:int"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="Match_type" nillable="true" type="xsd:string"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="Side" nillable="true" type="xsd:string"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="X" nillable="true" type="xsd:double"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="Y" nillable="true" type="xsd:double"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="Match_addr" nillable="true" type="xsd:string"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="ARC_Street" nillable="true" type="xsd:string"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="ARC_City" nillable="true" type="xsd:string"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="ARC_State" nillable="true" type="xsd:string"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="ARC_ZIP" nillable="true" type="xsd:string"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="COLLEGE" nillable="true" type="xsd:string"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="ADDRESS" nillable="true" type="xsd:string"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="City" nillable="true" type="xsd:string"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="State" nillable="true" type="xsd:string"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="ZIPCODE" nillable="true" type="xsd:string"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="MAIN_TEL" nillable="true" type="xsd:string"/>
-          <xsd:element maxOccurs="1" minOccurs="0" name="URL" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="the_geom" nillable="true" type="gml:MultiSurfacePropertyType"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="CT_ID_1" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="GEOID10" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="ALAND10" nillable="true" type="xsd:int"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="AWATER1" nillable="true" type="xsd:int"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="POP100" nillable="true" type="xsd:double"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="HU100" nillable="true" type="xsd:double"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Type" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Res" nillable="true" type="xsd:double"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="BRA_PD_" nillable="true" type="xsd:int"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="BRA_PD" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Cty_Cnc" nillable="true" type="xsd:int"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="WARD" nillable="true" type="xsd:int"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="ISD_Nbh" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Polc_Ds" nillable="true" type="xsd:int"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="Fr_Dstr" nillable="true" type="xsd:int"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="PWD" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="HI00" nillable="true" type="xsd:double"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="MR00" nillable="true" type="xsd:double"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="HI10" nillable="true" type="xsd:int"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="MR10" nillable="true" type="xsd:int"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="HI00_10" nillable="true" type="xsd:double"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="MR00_10" nillable="true" type="xsd:double"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="HI14" nillable="true" type="xsd:int"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="MR14" nillable="true" type="xsd:int"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="HI10_14" nillable="true" type="xsd:double"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="MR10_14" nillable="true" type="xsd:double"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="SESdx00" nillable="true" type="xsd:double"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="SES00tr" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="SESdx10" nillable="true" type="xsd:double"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="SES10tr" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="SESdx14" nillable="true" type="xsd:double"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="SES14tr" nillable="true" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="SES00_1" nillable="true" type="xsd:double"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="SES10_1" nillable="true" type="xsd:double"/>
         </xsd:sequence>
       </xsd:extension>
     </xsd:complexContent>
   </xsd:complexType>
-  <xsd:element name="collegesuniversities_gap" substitutionGroup="gml:AbstractFeature" type="geonode:collegesuniversities_gapType"/>
+  <xsd:element name="socioeconomic_status_2000_2014_9p1" substitutionGroup="gml:AbstractFeature" type="geonode:socioeconomic_status_2000_2014_9p1Type"/>
 </xsd:schema>
 ```
 

@@ -4,7 +4,7 @@ The HTTP request/response cycle can be kept synchronous as far as there are very
 
 Unfortunately there are cases when the cycle become slower and slower because of some time consuming tasks (1, 2 seconds or even more...): in these situations the best practice for a web application is to process asynchronously these tasks using a task queue.
 
-Furthermore some tasks must be scheduled, or need to interact with external services, which can take time.
+Furthermore some task must be scheduled, or need to interact with external services, which can take time.
 In those cases we run these longer tasks separately, in different processes.
 
 <img src="images/celery/sync_vs_async.png" alt="Sync vs Async processing" />
@@ -50,7 +50,7 @@ A more complex use case is when there are two or more applications which are the
 * it supports many message brokers (RabbitMQ, Redis, MongoDB, CouchDB, ...)
 * written in Python but it can operate with other languages
 * great integration with Django (it was born as a Django application)
-* it has great monitoring tools (Flower, django-celery-results)
+* great monitoring tools (Flower, django-celery-results)
 
 [RabbitMQ](https://www.rabbitmq.com) is the messabe broker which comes by default with GeoNode (it is possible to replace it with something different like Redis):
 
@@ -63,15 +63,15 @@ A more complex use case is when there are two or more applications which are the
 
 ## Using Celery in your application
 
-In this tutorial you will improve the application developed in the previous tutorial.
+In this tutorial you will improve the application developed in the previous tutorial. Previously you had a script which was syncing all of the GeoNode layers metadata to Solr (*foss4g_scripts/geonode2solr*). Instead than running this script periodically for all of the layers, a better approach would be to syncronize in Solr a layer as soon as the metadata for that layer are saved in GeoNode by the user.
 
 As the metadata Solr synchronization process can slow down the user interaction with the application, you will send that process asynchronously using Celery and RabbitMQ. You will see how you can use Celery to reliably process these tasks, and how to use the [Flower Celering monitoring tool](http://flower.readthedocs.io/) to analyze the processed tasks.
 
-## Using signals
+## Using Django signals
 
-You cannot run the synchronization task from the Django view, as you did previously, as you want to send that process asynchronously to the task queue (RabbitMQ).
+You need a way to run the synchronization process to Solr from GeoNode as soon as the user save the metadata for a given layer.
 
-One way to run the task is by forking the GeoNode metadata update view. But forking is the wrong way to do things as it introduces a lot of complications when updating to a newer GeoNode version.
+One way to accomplish this is by forking the GeoNode metadata update view. But forking is the wrong way to do things as it introduces a lot of complications when updating to a newer GeoNode version.
 
 So, how can you execute the sync process without forking GeoNode? [Django signals](https://docs.djangoproject.com/en/1.11/topics/signals/) provides a convenient way to do this.
 
@@ -142,6 +142,8 @@ def sync_solr(sender, instance, created, **kwargs):
 post_save.connect(sync_solr, sender=Layer)
 ```
 
+Thanks to the post_save signal, sync_solr will be run every time a layer is saved.
+
 Finally import signals in *geonode/solr/__init__.py*:
 
 ```python
@@ -154,7 +156,7 @@ Now to test the layer post_save signal you just created, try updating one of the
 
 Change some of the metadata and then check if in Solr the metadata you updated were correctly synced:
 
-http://localhost:8983/solr/boston/select?indent=on&q=name:%22shape_1%22&wt=json
+http://localhost:8983/solr/boston/select?indent=on&q=name:%22biketrails_arc_p%22&wt=json
 
 (you need to change the q=name parameter to your layer's name)
 
@@ -169,9 +171,9 @@ BROKER_URL = 'amqp://guest:guest@localhost:5672//'
 CELERY_ALWAYS_EAGER = False
 ```
 
-*BROKER_URL* is the location where RabbitMQ is running. You will send the tasks as the *guest* user. In production is recommendable to create a specific user with a strong password.
+*BROKER_URL* is the location where RabbitMQ is running. You will send the tasks as the *guest* user. In production it is recommendable to create a specific user with a strong password.
 
-Now create this *geonode/solr/celery_app.py* file, which will make your custom tasks discoverable by Celery:
+Now create this *geonode/solr/celery_app.py* file, which will make your custom task discoverable by Celery:
 
 ```python
 from __future__ import absolute_import
@@ -224,7 +226,7 @@ Let's see if everything works. Run the Celery worker by opening another shell (i
 
 ```sh
 $ . /workshop/env/bin/activate
-$ cd /workshop/geonode/geonode
+$ cd /workshop/geonode/geonode/solr
 $ celery -A celery_app worker -l info
 ```
 

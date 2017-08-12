@@ -1,10 +1,8 @@
 # Using a search engine with GeoNode: a quick tour of Solr
 
-> Solr is an open source enterprise search platform, written in Java, from the Apache Lucene project. Its major features include full-text search, hit highlighting, faceted search, real-time indexing, dynamic clustering, database integration, NoSQL features and rich document (e.g., Word, PDF) handling. Providing distributed search and index replication, Solr is designed for scalability and fault tolerance. Solr is the second-most popular enterprise search engine after Elasticsearch.
+> Solr is the popular, blazing fast open source enterprise search platform from the Apache Lucene project. Its major features include powerful full-text search, hit highlighting, faceted search, dynamic clustering, database integration, rich document (e.g., Word, PDF) handling, and geospatial search. Solr is highly scalable, providing distributed search and index replication, and it powers the search and navigation features of many of the world's largest internet sites.
 
-> Solr runs as a standalone full-text search server. It uses the Lucene Java search library at its core for full-text indexing and search, and has REST-like HTTP/XML and JSON APIs that make it usable from most popular programming languages. Solr's external configuration allows it to be tailored to many types of application without Java coding, and it has a plugin architecture to support more advanced customization.
-
-> Apache Lucene and Apache Solr are both produced by the same Apache Software Foundation development team since the two projects were merged in 2010. It is common to refer to the technology or products as Lucene/Solr or Solr/Lucene.
+> Solr is written in Java and runs as a standalone full-text search server within a servlet container such as Jetty. Solr uses the Lucene Java search library at its core for full-text indexing and search, and has REST-like HTTP/XML and JSON APIs that make it easy to use from virtually any programming language. Solr's powerful external configuration allows it to be tailored to almost any type of application without Java coding, and it has an extensive plugin architecture when more advanced customization is required.
 
 As CMS are adding Solr (or Elasticsearch) to the stack to improve user search experience, Solr can be very useful in the context of an SDI as it provides features which are not traditionally provided by GeoPortals and OGC standards.
 
@@ -34,6 +32,7 @@ As a first thing create a core for the aims of this tutorial. You will name the 
 $ sudo su solr
 $ cd /opt/solr-6.6.0/bin/
 $ ./solr create -c boston
+$ exit
 ```
 
 Now check if the new core is available from the Solr admin interface, which is running at: http://localhost:8983/solr/#/
@@ -242,7 +241,7 @@ To make things more heterogeneous you will:
 * add to each layer's metadata up to 5 different regions (from the ones in GeoNode)
 * add to each layer's metadata up to 5 different keywords (from an hard coded list)
 
-Feel free to modify the script a you wish.
+Feel free to modify the script as you wish.
 
 Create a Python script named *csw2solr.py*:
 
@@ -346,7 +345,6 @@ def sync():
         for uuid in csw.records:
             record = csw.records[uuid]
             if record.bbox.crs.code == 4326:
-                print record.bbox.minx, record.bbox.miny, record.bbox.maxx, record.bbox.maxy
                 layer = cswLayer()
                 layer.bbox_x0 = float(record.bbox.minx)
                 layer.bbox_y0 = float(record.bbox.miny)
@@ -559,7 +557,7 @@ http://localhost:8983/solr/boston/select?indent=on&q=modified_date:[2016-11%20TO
 
 ### Spatial Search
 
-Solr provides native spatial query syntax, thanks to its underlying engine based on [JTS Topology Suite](https://sourceforge.net/projects/jts-topo-suite/).
+Solr provides native spatial support and query syntax, thanks to its underlying engine based on [Spatial4j](https://www.locationtech.org/proposals/spatial4j) and [JTS Topology Suite](https://sourceforge.net/projects/jts-topo-suite/).
 
 There are different spatial field types in Solr, and all of them let to search documents given a spatial extent. Some of the spatial fields can even be used to provide a spatial representation: for example GeoServer with the [Solr plugin](http://docs.geoserver.org/stable/en/user/community/solr/index.html) makes possible to publish documents directly from Solr.
 
@@ -636,3 +634,5 @@ http://localhost:8983/solr/boston/select?q=*:*&facet=true&facet.heatmap=bbox&fac
 > The minX, maxX, minY, maxY reports the region where the counts are.  This is the minimally enclosing bounding rectangle of the input geom at the target grid level.
 > The columns and rows values are how many columns and rows that the output rectangle is to be divided by evenly.
 > The counts_ints2D key has a 2D array of integers.  The initial outer level is in row order (top-down), then the inner arrays are the columns (left-right).  If any array would be all zeros, a null is returned instead for efficiency reasons.  The entire value is null if there is no matching spatial data.
+
+ Heatmap is one way to facet spatial data. The other way is concentric circles of distance, which can be obtained using multiple facet.query params.

@@ -2,7 +2,7 @@
 
 In this tutorial you will learn how to create a custom Django application and use it in GeoNode.
 
-The application you will create is intended to query Solr to provide the end users with a metadata full text search. The application will have a web page with a form, from where in a text box the user will be able to enter a search string. When submitting the form a query will be sent to Solr and the first 10 results will be displayed in the page.
+The application you will create is intended to query Solr to provide the end users with a metadata full text search tool. The application will have a web page with a form, from where in a text box the user will be able to enter a search string. When submitting the form a query will be sent to Solr and the first 10 results will be displayed in the page.
 
 Each result will contain the main metadata record information (title, abstract, category...) and its score.
 
@@ -12,8 +12,9 @@ As a first thing you need to create the Django application, which you will name 
 
 ```sh
 $ . /workshop/env/bin/activate
-$ cd /workshop/geonode/geonode/
-$ python manage.py startapp solr
+$ cd /workshop/geonode
+$ mkdir geonode/solr
+$ python manage.py startapp solr geonode/solr
 ```
 
 ## Create a template
@@ -250,7 +251,7 @@ If everything works, you should see the Solr's Django application rendered. Try 
 
 ### Solr pagination
 
-As a bonus step, if you are willing adventurous, try to implement Solr pagination.
+As a bonus step, if you are feeling adventurous, try to implement Solr pagination.
 
 Hint: you will need to read the *start* value in *views.py* from *data['response']* and pass it in the *RequestContext* dictionary, together with *docs* and *count*.
 

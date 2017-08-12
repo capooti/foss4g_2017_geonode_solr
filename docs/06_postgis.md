@@ -4,7 +4,7 @@
 
 > PostGIS is an open source software program that adds support for geographic objects to the PostgreSQL object-relational database. PostGIS follows the Simple Features for SQL specification from the Open Geospatial Consortium (OGC).
 
-There are several good reasons to store the Django database (which by default in your setup uses sqlite) and the vector uploads using PostgreSQL and PostGIS. Most notably:
+There are several good reasons to store the Django database (which by default in your setup uses sqlite) and the vector data uploads database using PostgreSQL and PostGIS. Most notably:
 
 * advanced security and multiuser
 * data integrity
@@ -63,14 +63,7 @@ geonode=#
 
 Now you need to instruct GeoNode to use the *geonode* PostGIS database you just created as a datastore for new uploads.
 
-Crete a *local_settings.py* file and edit it:
-
-```sh
-$ cd /workshop/geonode/geonode/
-$ touch local_settings.py
-```
-
-Open with your favorite editor the freshly created *local_settings.py* file and copy and paste the following lines. Then save the file
+Open the *local_settings.py* file you previously created and copy and paste the following lines at the beginning of it. Then save the file
 
 ```python
 import os
@@ -385,5 +378,5 @@ geonode-# WHERE ST_Contains(ST_Transform(d.the_geom, 4326), c.the_geom);
 * [PostgreSQL Tutorial](http://www.postgresqltutorial.com/)
 * [Introduction to PostGIS Workshop](http://workshops.boundlessgeo.com/postgis-intro/) by Boundless
 * [The official PostgreSQL documentation](https://www.postgresql.org/docs/9.6/static/index.html)
-* [The officila PostGIS documentation](http://postgis.net/documentation/)
+* [The official PostGIS documentation](http://postgis.net/documentation/)
 * [PostGIS functions index](http://postgis.net/docs/manual-2.3/PostGIS_Special_Functions_Index.html)
