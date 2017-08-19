@@ -127,6 +127,7 @@ NOTE: the workshop uses Solr as the search engine, but it should be relatively e
 
 As a first thing, download and extract the latest Solr release in your Vagrant box. Then install the service following these instructions:
 
+(Open a new terminal window if geonode is running).
 ```sh
 $ cd /opt/
 $ sudo wget http://apache.claz.org/lucene/solr/6.6.0/solr-6.6.0.tgz
