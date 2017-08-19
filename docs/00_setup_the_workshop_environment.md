@@ -112,9 +112,12 @@ Log in in GeoNode using the administrative account which should have been alread
 
 Now click on the "admin" (or whatever is the username you created for the superuser) link, and then on GeoServer.
 
-The GeoServer administrative interface should corretly display at the url: http://localhost:8080/geoserver/web/
+The GeoServer administrative interface should correctly display at the url: http://localhost:8080/geoserver/web/
 
 <img src="images/0001_geoserver_login.png" alt="GeoServer Login" />
+
+Click on the snowflake-like button to the left of username to log in to GeoServer
+<img src='https://i.imgur.com/ItE8BAP.png' alt="GeoServer Login image" />
 
 ## Solr installation
 
