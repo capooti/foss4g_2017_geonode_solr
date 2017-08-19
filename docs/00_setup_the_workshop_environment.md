@@ -116,6 +116,9 @@ The GeoServer administrative interface should correctly display at the url: http
 
 <img src="images/0001_geoserver_login.png" alt="GeoServer Login" />
 
+Click on the snowflake-like button to the left of username to log in to GeoServer
+<img src='https://i.imgur.com/ItE8BAP.png' alt="GeoServer Login image" />
+
 ## Solr installation
 
 [Apache Solr](http://lucene.apache.org/solr/) is an open source enterprise search platform, developed in Java, on top of the [Apache Lucene project](https://lucene.apache.org/core/). Its major features include full-text search, hit highlighting, faceted search, real-time indexing, dynamic clustering, database integration, NoSQL features and rich document (e.g., Word, PDF) handling. Providing distributed search and index replication, Solr is designed for scalability and fault tolerance.
