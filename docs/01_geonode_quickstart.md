@@ -30,6 +30,8 @@ Here is a quick overview of the datasets you are going to use:
 
 In this tutorial you will upload the shapefiles to GeoNode. Here is how you can upload one of the datasets. Just repeat the same process for all of the datasets.
 
+Visit localhost:8000
+
 Click on the "Data > Upload Layer" menu. Then drag and drop the *biketrails_arc_p.zip* file to the "Drop files here" area, or use for this purpose the "Choose Files" button.
 
 <img src="images/0010_upload_shapefile.png" alt="Upload Shapefile" />
