@@ -158,3 +158,13 @@ Install PostgreSQL and PostGIS from apt packages:
 ```sh
 sudo apt-get install postgresql postgresql-contrib postgis
 ```
+
+## Summary of URLs
+| Application | URL |
+| ------ | ------ |
+| GeoServer | http://localhost:8080/geoserver/web/  |
+| GeoNode | http://localhost:8000/ |
+| Solr | http://localhost:8983/solr/#/ |
+
+## Troubleshooting
+If you get an "Address already in use" error, you may find [this stackoverflow](https://stackoverflow.com/questions/12737293/how-do-i-resolve-the-java-net-bindexception-address-already-in-use-jvm-bind) to be helpful.
