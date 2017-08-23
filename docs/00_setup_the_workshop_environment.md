@@ -112,9 +112,12 @@ Log in in GeoNode using the administrative account which should have been alread
 
 Now click on the "admin" (or whatever is the username you created for the superuser) link, and then on GeoServer.
 
-The GeoServer administrative interface should corretly display at the url: http://localhost:8080/geoserver/web/
+The GeoServer administrative interface should correctly display at the url: http://localhost:8080/geoserver/web/
 
 <img src="images/0001_geoserver_login.png" alt="GeoServer Login" />
+
+Click on the snowflake-like button to the left of username to log in to GeoServer
+<img src='https://i.imgur.com/ItE8BAP.png' alt="GeoServer Login image" />
 
 ## Solr installation
 
@@ -127,6 +130,7 @@ NOTE: the workshop uses Solr as the search engine, but it should be relatively e
 
 As a first thing, download and extract the latest Solr release in your Vagrant box. Then install the service following these instructions:
 
+(Open a new terminal window if geonode is running).
 ```sh
 $ cd /opt/
 $ sudo wget http://apache.claz.org/lucene/solr/6.6.0/solr-6.6.0.tgz
@@ -154,3 +158,13 @@ Install PostgreSQL and PostGIS from apt packages:
 ```sh
 sudo apt-get install postgresql postgresql-contrib postgis
 ```
+
+## Summary of URLs
+| Application | URL |
+| ------ | ------ |
+| GeoServer | http://localhost:8080/geoserver/web/  |
+| GeoNode | http://localhost:8000/ |
+| Solr | http://localhost:8983/solr/#/ |
+
+## Troubleshooting
+If you get an "Address already in use" error, you may find [this stackoverflow](https://stackoverflow.com/questions/12737293/how-do-i-resolve-the-java-net-bindexception-address-already-in-use-jvm-bind) to be helpful.
