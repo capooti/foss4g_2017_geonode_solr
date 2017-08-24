@@ -159,8 +159,6 @@ Install PostgreSQL and PostGIS from apt packages:
 sudo apt-get install postgresql postgresql-contrib postgis
 ```
 
-
-
 ## Summary of URLs
 | Application | URL |
 | ------ | ------ |
