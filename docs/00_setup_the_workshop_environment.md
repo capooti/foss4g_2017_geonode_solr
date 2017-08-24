@@ -171,7 +171,6 @@ If your connection to the virtual machine is closed (automatically or on purpose
 
 ```sh
 $ cd foss4g_2017_geonode_solr
-$ vagrant up
 $ vagrant ssh
 ```
 ```sh
@@ -187,3 +186,4 @@ Visit  http://localhost:8000/
 
 ## Troubleshooting
 If you get an "Address already in use" error, you may find [this stackoverflow](https://stackoverflow.com/questions/12737293/how-do-i-resolve-the-java-net-bindexception-address-already-in-use-jvm-bind) to be helpful.
+
