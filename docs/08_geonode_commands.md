@@ -78,7 +78,7 @@ Create the PostGIS view. Note that it is necessary to transform the geometry of 
 
 ```sh
 geonode=# CREATE TABLE collegesuniversities_buffer AS
-geonode-# SELECT ST_Buffer(ST_Transform(the_geom, 2249), 1000) as the_geom, "ZIPCODE" as zipcode FROM collegesuniversities_gap;
+geonode-# SELECT ST_Buffer(ST_Transform(the_geom, 2249), 1000)::geometry(Polygon, 2249) as the_geom, "ZIPCODE" as zipcode FROM collegesuniversities_gap;
 ```
 
 Now check if the view was correctly created and registered in PostGIS by checking the *geometry_columns* view
