@@ -35,6 +35,7 @@ If GeoNode/GeoServer are not running, activate the virtualenv, start geoserver a
 ```sh
 $ cd /workshop/
 $ . env/bin/activate
+$ cd geonode/
 $ paver start_geoserver
 $ ./manage.py runserver 0.0.0.0:8000
 ```

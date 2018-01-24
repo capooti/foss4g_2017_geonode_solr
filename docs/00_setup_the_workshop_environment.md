@@ -166,5 +166,24 @@ sudo apt-get install postgresql postgresql-contrib postgis
 | GeoNode | http://localhost:8000/ |
 | Solr | http://localhost:8983/solr/#/ |
 
+## Restarting the environment
+If your connection to the virtual machine is closed (automatically or on purpose) you will not need to rerun all of the installation commands above. Here are the subset of commands you will need to restart: 
+
+```sh
+$ cd foss4g_2017_geonode_solr
+$ vagrant ssh
+```
+```sh
+$ cd /workshop/
+$ . env/bin/activate
+```
+```sh
+$ cd geonode
+$ paver start_geoserver
+$ python manage.py runserver 0.0.0.0:8000
+```
+Visit  http://localhost:8000/ 
+
 ## Troubleshooting
 If you get an "Address already in use" error, you may find [this stackoverflow](https://stackoverflow.com/questions/12737293/how-do-i-resolve-the-java-net-bindexception-address-already-in-use-jvm-bind) to be helpful.
+
